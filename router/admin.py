@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, session, redirect, request
 from flask_login import login_user, logout_user, current_user
+from extension.utils import ip_ban
 
 from flask_admin import AdminIndexView
 from flask_admin.contrib.sqla import ModelView
@@ -24,11 +25,12 @@ class AdminHome(AdminIndexView):
         return current_user.is_authenticated
 
     def inaccessible_callback(self, name, **kwargs):
-        return render_template('login.html')
+        return render_template('admin/login.html')
     
 
 @admin.route('/login', methods=['GET','POST'])
 def login():
+    session.permanent = True
     name = request.form.get('name')
     if name is not None:
         user = User.query.filter_by(name=name).first()
@@ -36,9 +38,9 @@ def login():
             login_user(user)
             return redirect('/admin')
     else:
-        # return render_template('login.html')
+        # ip = request.remote_addr
         return {":":"deny"}
-    return render_template('login.html')
+    return render_template('admin/login.html')
 
 
 @admin.route('/logout')
@@ -46,5 +48,3 @@ def logout():
     session.clear()
     logout_user()
     return "Logout access"
-
-
