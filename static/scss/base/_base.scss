@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway&family=Roboto:wght@300&display=swap');
+
+.none{
+    display: none;
+}
+
+body{
+    font-family: $font-roboto
+}
+
+.container {
+    margin: 0 auto;
+    max-width: 1440px;
+    padding: 0 32px;
+    text-align: center;
+}
+
+.title1 {
+    font-family: $font-raleway;
+}
